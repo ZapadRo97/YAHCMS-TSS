@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Administrate";
+}
+
+<style>
+    .col-sm button{
+        height: 100%;
+    }
+</style>
+<h2 style="text-align:center;margin:50px 0 50px 0">Administrator Area</h2>
+<div class="row">
+    <div class="col-sm">
+      <a asp-controller="Blog" asp-action="Index" class="btn btn-primary btn-lg btn-block">Manage <br/> Blogs</a>
+    </div>
+    <div class="col-sm">
+      <a asp-controller="Blog" asp-action="Index" class="btn btn-primary btn-lg btn-block">Manage <br/> Posts</a>
+    </div>
+    <div class="col-sm">
+      <a asp-controller="Blog" asp-action="Index" class="btn btn-primary btn-lg btn-block">Manage <br/> Comments</a>
+    </div>
+    <div class="col-sm">
+      <a asp-controller="Account" asp-action="Index" class="btn btn-primary btn-lg btn-block">Manage <br/> Users</a>
+    </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-sm">
+      <a asp-controller="Location" asp-action="Index" class="btn btn-primary btn-lg btn-block">Manage <br/> Locations</a>
+    </div>
+    <div class="col-sm">
+      <a asp-controller="Artist" asp-action="Index" class="btn btn-primary btn-lg btn-block">Manage <br/> Artists</a>
+    </div>
+    <div class="col-sm">
+      <a asp-controller="Quiz" asp-action="Index" class="btn btn-primary btn-lg btn-block">Manage <br/> Quizes</a>
+    </div>
+</div>

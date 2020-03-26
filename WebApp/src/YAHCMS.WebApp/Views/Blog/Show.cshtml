@@ -1,0 +1,31 @@
+@model BlogViewModel
+
+<div class="card">
+<div class="card-header">
+  <div class="row">
+  @if((string)ViewData["account_type"] == "creator")
+  {
+    <a class="btn btn-primary" asp-controller="Blog" asp-action="Edit" asp-route-id="@Model.ID"><i class="fas fa-edit col-sm" style="text-align:left;color:white"></i></a>
+  }
+    
+  <h5 class="col-sm">@Model.Name</h5>
+  
+  @if((string)ViewData["account_type"] == "creator")
+  {
+    <a class="btn btn-danger" asp-controller="Blog" asp-action="Delete" asp-route-id="@Model.ID"><i class="fas fa-trash-alt col-sm" style="text-align:right;color:white"></i></a>
+  }
+  </div>
+  
+
+</div>
+  <div class="card-body">
+    <p class="card-text">@Model.Description</p>
+    <a asp-controller="Blog" asp-action="View" asp-route-id="@Model.ID" class="btn btn-primary">Visit Blog</a>
+  </div>
+  <div class="card-footer text-muted">
+    <div class="row">
+        <div class="col-sm">Posts: @Model.Posts.Count() </div>
+        <div class="col-sm">Updated: @Model.Updated.ToShortDateString()</div>
+    </div>
+  </div>
+</div>

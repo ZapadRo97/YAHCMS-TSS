@@ -1,0 +1,123 @@
+@model Dictionary<ArtistTypeViewModel, List<ArtistWithPostViewModel>>
+
+<style>
+.card-body{
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+</style>
+
+<div id="accordion">
+@foreach(var type in @Model.Keys)
+{
+    var absType = System.Math.Abs(@type.ID);
+    <div class="card">
+        <div class="card-header" id="heading_@absType">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_@absType" aria-expanded="true" aria-controls="collapse_@absType">
+                    @type.Name
+                </button>
+            </h5>
+        </div>
+    </div>
+
+    //<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+    //<div class="card-body">
+
+    <div id="collapse_@absType" class="collapse" aria-labelledby="heading_@absType">
+    <div class="card-body">
+
+    <div class="row">
+    <div class="col-sm-1">
+        <p>@type.Description</p>
+    </div>
+    <div class="col-sm-11">
+    @{
+    var artists = @Model[type];
+    foreach(var artist in artists)
+    {
+        var artistId = @artist.artist.ID;
+        <div class="card">
+            <div class="card-header" id="headinga_@artistId">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapsea_@artistId" aria-expanded="true" aria-controls="collapsea_@artistId">
+                        @artist.artist.Name
+                    </button>
+                </h5>
+            </div>
+        </div>
+
+
+        <div id="collapsea_@artistId" class="collapse" aria-labelledby="headinga_@artistId">
+        <div class="card-body">
+
+        <div class="row">
+        <div class="col-sm-3">
+            <p>@artist.artist.Description</p>
+        </div>
+        <div class="col-sm-9">
+        @{
+        var postsDic = artist.posts;
+        if(postsDic != null)
+        {
+            foreach(var blog in postsDic.Keys)
+            {
+                var blogId = blog.ID;
+
+                <div class="card">
+                    <div class="card-header" id="headingb_@blogId">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseb_@blogId" aria-expanded="true" aria-controls="collapseb_@blogId">
+                                @blog.Name
+                            </button>
+                        </h5>
+                    </div>
+                </div>
+
+                <div id="collapseb_@blogId" class="collapse" aria-labelledby="headingb_@blogId">
+                <div class="card-body">
+
+                <div class="row">
+                <div class="col-sm-3">
+                    <p>@blog.Description</p>
+                </div>
+                
+                <div class="col-sm-9">
+                <div class="list-group">
+                @{
+                var posts = postsDic[blog];
+                foreach(var post in posts)
+                {
+                    <a target="_blank" asp-controller="Blog" asp-action="ViewPost" asp-route-id="@post.ID" asp-route-blogid="@blog.ID" class="list-group-item list-group-item-action">@post.Title</a>
+                }
+                }
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                
+            }
+        } 
+        else
+        {
+            <h5>No items</h5>
+        }
+        }
+        </div>
+        </div>
+        </div>
+        </div>
+
+
+        
+    }
+    }
+    </div>
+    </div>
+    </div>
+    </div>
+}
+</div>
+

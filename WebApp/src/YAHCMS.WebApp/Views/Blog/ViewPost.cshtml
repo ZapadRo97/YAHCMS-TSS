@@ -1,0 +1,29 @@
+@model CompletePostViewModel
+
+<h1>@Model.post.Title</h1>
+
+<div class="row">
+<div class="col-sm-9">
+<p>@Model.post.Content</p>
+</div>
+
+<div class="col-sm-3">
+
+@if(@Model.artist != null)
+{
+    <h5>@Model.artist.Name</h5>
+    <p>@Model.artist.Description</p>
+    <img src="@Model.artist.PhotoName" alt="Image" style="width:100%; "/>
+}
+else if(@Model.location != null)
+{
+    <h5>@Model.location.Name</h5>
+    <p>@Model.location.Description</p>
+    <img src="@Model.location.PhotoName" alt="Image" style="width:100%; "/>
+}
+
+
+
+</div>
+
+</div>

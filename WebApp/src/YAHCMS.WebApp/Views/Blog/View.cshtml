@@ -1,0 +1,13 @@
+@model BlogViewModel
+
+<div class="text-center">
+    <h1 class="display-4">@Model.Name</h1>
+</div>
+
+<p>@Model.Description</p>
+
+@foreach(var post in @Model.Posts) 
+{
+    @await Html.PartialAsync("ShowPost", post)
+    <br>
+}

@@ -1,0 +1,41 @@
+@model YAHCMS.WebApp.ViewModels.QuizQuestion
+
+@{
+    Layout = null;
+}
+
+<div class="form-group">
+    <label for="testQuestion" class="control-label">Question @Model.ID</label>
+    <input class="form-control"  type="text" id="testQuestion" name="questions_@Model.ID"/>
+
+</div>
+<div class="row">
+    <div class="col">
+        <label for="testAnswer1" class="control-label">Answer1</label>
+        <input class="form-control" type="text" id="testAnswer1" name="answers1_@Model.ID"/>
+        <div class="form-group" style="text-align:center">
+            <input type="radio" name="radios_@Model.ID" value="0" checked>
+        </div>
+    </div>
+    <div class="col">
+        <label for="testAnswer2" class="control-label">Answer2</label>
+        <input class="form-control" type="text" id="testAnswer2" name="answers2_@Model.ID" />
+        <div class="form-group" style="text-align:center">
+            <input type="radio" name="radios_@Model.ID" value="1">
+        </div>
+    </div>
+    <div class="col">
+        <label for="testAnswer3" class="control-label">Answer3</label>
+        <input class="form-control" type="text" id="testAnswer3" name="answers3_@Model.ID" />
+        <div class="form-group" style="text-align:center">
+            <input type="radio" name="radios_@Model.ID" value="2">
+        </div>
+    </div>
+    <div class="col">
+        <label for="testAnswer4" class="control-label">Answer4</label>
+        <input class="form-control" type="text" id="testAnswer4" name="answers4_@Model.ID" />
+        <div class="form-group" style="text-align:center">
+            <input type="radio" name="radios_@Model.ID" value="3">    
+        </div>
+    </div>
+</div>

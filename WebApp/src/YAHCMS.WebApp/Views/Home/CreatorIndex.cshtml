@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Home Page";
+    @model List<BlogViewModel>
+}
+
+
+<div class="text-center" id="dynamic_container">
+    <h1 class="display-4">My Blogs</h1>
+    
+    <div id="dynamicContentContainer">
+    
+    @foreach (var blog in Model)
+    {
+        <br>
+        //blog.Posts = new List<PostViewModel>();
+        @await Html.PartialAsync("../Blog/Show", blog)
+    }
+
+    </div>

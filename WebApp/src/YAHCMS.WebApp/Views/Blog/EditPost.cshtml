@@ -1,0 +1,100 @@
+@model PostViewModel
+
+<form asp-controller="Blog" asp-action="EditPost" method="post">
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control"/>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Content" class="control-label"></label>
+        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="BlogID" />
+
+    <div class="form-row form-group" style="margin-left:30px">
+
+        <div class="custom-radio col">
+            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" onclick="selectLocation()" checked>
+            <label class="custom-control-label" for="customRadio1">Location</label>
+        </div>
+        <div class="custom-radio col">
+            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" onclick="selectArtist()">
+            <label class="custom-control-label" for="customRadio2">Artist</label>
+        </div>
+
+    </div>
+
+    <div class="form-row form-group">
+        <div class="col">
+            <label class="control-label">Location</label>
+            <select class="form-control" asp-for="LocationID" asp-items="Model.Locations"></select>
+            <span asp-validation-for="LocationID" class="text-danger"></span>
+        </div>
+
+        <div class="col">
+            <label class="control-label">Artist</label>
+            <select class="form-control" asp-for="ArtistID" asp-items="Model.Artists"></select>
+            <span asp-validation-for="ArtistID" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+
+
+</form>
+
+@section Scripts 
+{
+     <partial name="_ValidationScriptsPartial"/>
+
+     <script>
+        //$("#ArtistID").val("0").change();
+        //$("#ArtistID").prop("disabled", true);
+
+        var artistID = "@Model.ArtistID";
+        var locationID = "@Model.LocationID";
+
+        if(artistID === "") {
+            selectLocation();
+            $("#customRadio1").prop("checked", true);
+            $("#LocationID").val(artistID).change();
+        }
+
+        if(locationID === "") {
+            selectArtist();
+            $("#customRadio2").prop("checked", true);
+            $("#ArtistID").val(artistID).change();
+        }
+
+        console.log(artistID);
+        console.log(locationID);
+
+        function selectArtist() {
+            $("#ArtistID")[0].selectedIndex = 0
+            $("#ArtistID").prop("disabled", false);
+
+            $("#LocationID").val("0").change();
+            $("#LocationID").prop("disabled", true);
+
+        }
+
+        function selectLocation() {
+            $("#LocationID")[0].selectedIndex = 0
+            $("#LocationID").prop("disabled", false);
+
+            $("#ArtistID").val("0").change();
+            $("#ArtistID").prop("disabled", true);
+
+        }
+
+     </script>    
+}

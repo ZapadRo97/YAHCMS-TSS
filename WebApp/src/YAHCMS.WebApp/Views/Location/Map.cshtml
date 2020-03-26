@@ -1,0 +1,38 @@
+
+
+<div class="row">
+
+<div class="col-sm-1">
+</div>
+
+<div class="col-sm-10">
+<div id="map" style="height:400px"></div>
+</div>
+
+<div class="col-sm-1">
+</div>
+
+</div>
+
+@section Scripts {
+<script>
+
+var endpoint = '@ViewData["endpoint"]';
+
+var map = setMap();
+
+$.get( endpoint+"locations", function( data ) {
+  
+    data.forEach(location => {
+        //console.log(location);
+        var lat = location.latitude;
+        var long = location.longitude;
+        var marker = L.marker([lat,long]).addTo(map); 
+        marker.bindPopup("<h4>"+location.name+"</h4><p>"+location.description+"</p><a class='btn btn-primary' style='color:white;' href='/blog/listforlocation/"+location.id+"'>Postari</a>");
+    });
+});
+
+//var map = setMap();
+
+</script>
+}

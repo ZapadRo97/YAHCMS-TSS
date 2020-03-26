@@ -1,0 +1,16 @@
+@model IEnumerable<UserViewModel>
+
+
+<ul class="list-group">
+@foreach(var user in @Model)
+{
+    if(user.Type == "current")
+    {
+        <li class="list-group-item active">@user.Name: @user.Score</li>
+    }
+    else
+    {
+        <li class="list-group-item">@user.Name: @user.Score</li>
+    }
+}
+</ul>

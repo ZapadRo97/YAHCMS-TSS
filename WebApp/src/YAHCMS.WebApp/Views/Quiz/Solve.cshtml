@@ -1,0 +1,82 @@
+@model YAHCMS.WebApp.ViewModels.QuizViewModel
+
+<h3>@Model.Title</h3>
+<p>@Model.Description</p>
+<br>
+<form asp-action="Solve" method="post" id="form">
+    <input hidden type="text" value="@Model.ID" name="id"/>
+    @foreach(var question in @Model.Questions)
+    {
+        <p>@question.Question</p>
+        var answers = question.Answers.Substring(1, question.Answers.Length -2);
+        var answersArr = answers.Split(",");
+        var index = 0;
+        <div class="row">
+        @foreach(var answer in answersArr)
+        {
+            var cleanAnswer = answer.Substring(1, answer.Length -2);
+            <div class="col" style="text-align:center">
+                <p>@cleanAnswer</p>
+                <div class="form-group">
+                    <input type="radio" name="radios_@question.ID" value="@index">
+                </div>
+            </div>
+            index++;
+        
+        }
+        </div>
+        <hr/>
+    }
+
+    <div class="form-group">
+        <input type="submit" value="Show Results" class="btn btn-primary" />
+    </div>
+</form>
+@section Scripts {
+
+    <script>
+
+        $('#form').submit(function(e) {
+        e.preventDefault();
+        var numberInputs = 0;
+        var data = $('#form').serializeArray().reduce(function(obj, item) {
+            obj[item.name] = item.value;
+            numberInputs++;
+            return obj;
+        }, {});
+        var numberQuestions = numberInputs - 2;
+        console.log("Questions: " + numberQuestions);
+        var answers = [];
+        for (var key of Object.keys(data)) {
+            //console.log(key + " -> " + data[key])
+            if(key.startsWith("radio"))
+                answers.push(data[key])
+        }
+
+        //console.log(answers);
+        var formData = {"id" : parseInt(data['id']), "answers": answers};
+        console.log(JSON.stringify(formData));
+        $.ajax({
+        type: "POST",
+        headers: { 
+            'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+    },
+        url: '/quiz/process',
+        data: JSON.stringify(formData),
+        dataType: "json",
+        success: function(data) {
+            var newLink='@Url.Action("Result", "Quiz", new YAHCMS.WebApp.ViewModels.ResultViewModel(111,222))';
+            newLink = newLink.replace("111", data.quizID);
+            newLink = newLink.replace("222", data.score);
+            newLink = newLink.replace("amp;", "");
+            window.location.href = newLink;
+
+        }
+        });
+
+        });
+
+    </script>
+
+}

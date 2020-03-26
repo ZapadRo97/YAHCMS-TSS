@@ -1,0 +1,10 @@
+@model YAHCMS.WebApp.ViewModels.ResultViewModel
+
+<h1>Congratulations</h1>
+<h4>Your score is: @Model.Score</h4>
+
+<h5>Quiz: @Model.Title</h5>
+<p>Your score has been registered</p>
+
+<a class="btn btn-primary" asp-controller="quiz" asp-action="list">Back</a>
+

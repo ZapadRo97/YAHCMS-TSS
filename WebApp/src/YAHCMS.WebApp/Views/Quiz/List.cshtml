@@ -1,0 +1,25 @@
+
+@model List<YAHCMS.WebApp.ViewModels.QuizViewModel>
+
+@foreach(var quiz in @Model)
+{
+    <div class="row">
+        <div class="col-sm">
+            <h4>@quiz.Title</h4>
+        </div>
+
+        <div class="col-sm">
+            <p>@quiz.Description</p>
+        </div>
+
+        <div class="col-sm">
+            <p>Questions: @quiz.Questions.Count</p>
+        </div>
+
+        <div class="col-sm">
+            <a class="btn btn-primary" asp-controller="Quiz" asp-action="Solve" asp-route-id="@quiz.ID">Start Quiz</a>
+        </div>
+
+    </div>
+    <br>
+}

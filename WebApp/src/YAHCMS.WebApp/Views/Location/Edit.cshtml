@@ -1,0 +1,94 @@
+@model YAHCMS.WebApp.ViewModels.LocationViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<h4>Location</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Latitude" class="control-label"></label>
+                <input asp-for="Latitude" class="form-control" />
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longitude" class="control-label"></label>
+                <input asp-for="Longitude" class="form-control" />
+                <span asp-validation-for="Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhotoName" class="control-label"></label>
+                <input asp-for="formFile" type="file" class="form-control" />
+                <input asp-for="PhotoName" value="@Model.PhotoName" readonly style="display:none"/>
+                <span asp-validation-for="formFile" class="text-danger"></span>
+
+            </div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <div id="map" style="height:400px"></div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+
+@section Scripts {
+<script>
+
+    var map = setMap();
+    map.on('click', onMapClick);
+
+    var lat = @Model.Latitude;
+    var long = @Model.Longitude;
+
+    var theMarker = L.marker([lat, long]).addTo(map);
+    function onMapClick(e) {
+        //alert("You clicked the map at " + e.latlng);
+        var lat = e.latlng.lat;
+        var long = e.latlng.lng;
+
+         if (theMarker != undefined) {
+              map.removeLayer(theMarker);
+        };
+
+        //Add a marker to show where you clicked.
+        theMarker = L.marker([lat,long]).addTo(map);  
+
+        $('#Latitude').val(lat);
+        $('#Longitude').val(long); 
+    }
+
+    var map = setMap();
+    map.on('click', onMapClick);
+</script>
+}
+
+</html>

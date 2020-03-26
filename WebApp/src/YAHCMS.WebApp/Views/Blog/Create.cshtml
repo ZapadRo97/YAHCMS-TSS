@@ -1,0 +1,38 @@
+@model BlogViewModel
+
+<form asp-controller="Blog" asp-action="Create" method="post">
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input asp-for="Name" class="form-control" id="name" placeholder="My best blog"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea asp-for="Description" class="form-control" id="description" rows="5" placeholder="This is a blog about cats"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-row form-group">
+        <div class="col">
+            <label for="language">Language</label>
+            <select id="language" class="form-control" asp-for="Language" asp-items="Model.Languages"></select>
+            <span asp-validation-for="Language" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <label for="conutry">Country</label>
+            <select id="country" class="form-control" asp-for="Country" asp-items="Model.Countries"></select>
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+
+</form>
+
+@section Scripts 
+{
+     <partial name="_ValidationScriptsPartial"/>    
+}

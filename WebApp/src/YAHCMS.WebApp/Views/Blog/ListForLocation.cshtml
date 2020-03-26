@@ -1,0 +1,52 @@
+@model List<BlogViewModel>
+
+<style>
+.card-body{
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+</style>
+
+<div id="accordion">
+@foreach(var blog in @Model)
+{
+    <div class="card">
+        <div class="card-header" id="heading_@blog.ID">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_@blog.ID" aria-expanded="true" aria-controls="collapse_@blog.ID">
+                    @blog.Name
+                </button>
+            </h5>
+        </div>
+    </div>
+
+    <div id="collapse_@blog.ID" class="collapse" aria-labelledby="heading_@blog.ID">
+    <div class="card-body">
+
+    <div class="row">
+    <div class="col-sm-3">
+        <p>@blog.Description</p>
+    </div>
+
+    <div class="col-sm-9">
+    <div class="list-group">
+    @if(blog.Posts != null)
+    {
+        foreach(var post in blog.Posts)
+        {
+            <a target="_blank" asp-controller="Blog" asp-action="ViewPost" asp-route-id="@post.ID" asp-route-blogid="@blog.ID" class="list-group-item list-group-item-action">@post.Title</a>
+        }
+    } 
+    else
+    {
+        <h5>No items</h5>
+    }
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+}
+
+</div>

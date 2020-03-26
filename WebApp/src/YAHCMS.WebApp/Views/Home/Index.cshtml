@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    @model List<long>
+}
+
+
+<div class="text-center" id="dynamic_container">
+    <h1 class="display-4">Welcome</h1>
+    
+    <div id="dynamicContentContainer"></div>
+<script>
+    var ids = []
+    if(@Model.ToArray().Count() != 0 )
+        var ids = '@String.Join(",", @Model.ToArray())'.split(',');
+    console.log(ids);
+    for(i in ids) {
+        $.get('@Url.Action("GetBlog", "Blog")', {id : ids[i]}, function(content){
+            var $div1 = $("<div>", { "id": "dynamicContent" + ids[i] }).html(content);
+            $("#dynamic_container").append($div1).append($("<br>"));
+        });
+    }
+    
+</script>
+</div>

@@ -1,0 +1,117 @@
+@model YAHCMS.WebApp.ViewModels.QuizViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>Quiz</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" id="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <br>
+            <h5>Questions</h5>
+            <hr />
+
+            <div id="dynamic_questions">
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+        <button class="btn btn-primary" id="add_q">Add Question</button>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>
+
+@section Scripts {
+<script>
+    var questionsNumber = 0;
+
+    /*var html = `await Html.PartialAsync("CreateQuestion", new QuizQuestion(1))`;*/
+    //var div_ext = $("<div>").html(html);
+    //$('#dynamic_questions').append(div_ext);
+
+    function addQuestion()
+    {
+        $.get("/Quiz/CreateQuestion/"+questionsNumber, function(data){
+        var div_ext = $("<div>").html(data);
+        $('#dynamic_questions').append(div_ext);
+        questionsNumber++;
+    });
+    }
+
+    addQuestion();
+
+    $('#add_q').click(function(e){
+        addQuestion();
+    });
+    
+
+    $('#form').submit(function(e) {
+        e.preventDefault();
+        var numberInputs = 0;
+        var data = $('#form').serializeArray().reduce(function(obj, item) {
+            obj[item.name] = item.value;
+            numberInputs++;
+            return obj;
+        }, {});
+        var numberQuestions = (numberInputs - 3)/6;
+        console.log("Questions: " + numberQuestions);
+        var formData = {"Title": data['Title'], "Description": data['Description']}
+        var questions = []
+        for(var i = 0; i < numberQuestions;i++) {
+            var question = {"Question" : data['questions_'+i], "Answers" : '["' + data['answers1_'+i] 
+            + '","' + data['answers2_'+i] + '","' + data['answers3_'+i] + '","' + data['answers4_'+i] + '"]', "CorrectAnswer": data['radios_'+i] };
+            questions.push(question);
+        }
+        //console.log(data);
+        formData["Questions"] = questions;
+
+
+        console.log(JSON.stringify(formData));
+
+        var endpoint = '@ViewData["endpoint"]';
+        $.ajax({
+        type: "POST",
+        headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+    },
+        url: endpoint+"quizs",
+        data: JSON.stringify(formData),
+        dataType: "json",
+        success: function(data) {
+            console.log("done");
+            window.location.href = "/Quiz";
+        }
+        });
+
+    });
+
+</script>
+}

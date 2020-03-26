@@ -1,0 +1,10 @@
+@model EditUserViewModel
+
+<form asp-controller="Account" asp-action="FinishRegistration" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    ID: <input asp-for="UID" readonly/> <br/>
+    Name:  <input asp-for="Name" /> <br/>
+    <span asp-validation-for="Name"></span><br/>
+    <select asp-for="Type" asp-items="Model.UserTypes"></select>
+    <button type="submit">Finish Registration</button>
+</form>
